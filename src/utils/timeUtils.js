@@ -15,3 +15,7 @@ export function fancyTimeFormat(time) {
   ret += "" + secs;
   return ret;
 }
+
+export function getSecondsFromHours(hours) {
+  return hours * 60 * 60;
+}

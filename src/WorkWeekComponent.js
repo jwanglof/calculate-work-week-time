@@ -1,15 +1,11 @@
 import React, {Component} from 'react';
 import TimeComponent from './TimeComponent';
 import {differenceInSeconds} from "date-fns";
-import {fancyTimeFormat} from './utils/timeUtils';
+import {fancyTimeFormat, getSecondsFromHours} from './utils/timeUtils';
 
 class WorkWeekComponent extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      totalWeekHours: 0
-    };
   }
 
   mapObject(object, callback) {
@@ -18,10 +14,7 @@ class WorkWeekComponent extends Component {
     });
   }
 
-  //prevProps, prevState
-  lol(togglData, hoursInAWeek) {
-    // const { togglData, hoursInAWeek } = this.props;
-    console.log('Did???', togglData, hoursInAWeek);
+  countTotalHours(togglData, hoursInAWeek) {
     let totalHours = 0;
 
     this.mapObject(togglData, (key, timeEntries) => {
@@ -35,8 +28,8 @@ class WorkWeekComponent extends Component {
 
   render() {
     const { togglData, hoursInAWeek } = this.props;
-    const totalTimeInSeconds = this.lol(togglData, hoursInAWeek);
-
+    const totalTimeInSeconds = this.countTotalHours(togglData, hoursInAWeek);
+    const amountOfOverTimeInSeconds = getSecondsFromHours(hoursInAWeek) - totalTimeInSeconds;
     return (
       <div>
         {this.mapObject(togglData, (key, value) => {
@@ -44,6 +37,8 @@ class WorkWeekComponent extends Component {
         })}
         <div>
           Total time this week: {fancyTimeFormat(totalTimeInSeconds)}
+          <br/>
+          Diff against work-time: {fancyTimeFormat(Math.abs(amountOfOverTimeInSeconds))}
         </div>
       </div>
     );

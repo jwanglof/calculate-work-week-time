@@ -1,31 +1,28 @@
 import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
-import * as nanoid from 'nanoid';
 import axios from 'axios';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import {DateUtils} from 'react-day-picker';
-import {format, isSameDay, parse, toDate, subDays} from 'date-fns'
+import {format, isSameDay, lastDayOfWeek, parse, startOfWeek, toDate} from 'date-fns'
 import WorkWeekComponent from './WorkWeekComponent';
 
 class App extends Component {
-  firstInputName = nanoid();
   DATE_FORMAT = 'yyyy-MM-dd';
 
   constructor() {
     super();
 
     this.state = {
-      // totalTime: 0.0,
       workspaceId: '1674001',
       username: '536ec56a65c5c6636c1a1ea700f367df',
       parsedTogglData: {},
-      startDate: subDays(new Date(), 7),
-      endDate: subDays(new Date(), 3),
-      hoursInAWeek: 37.5
+      startDate: startOfWeek(new Date(), {weekStartsOn: 1}),
+      endDate: lastDayOfWeek(new Date(), {weekStartsOn: 1}),
+      hoursInAWeek: 37.5,
+      weekendDates: ['2018-06-22']  // TODO Add support for weekends so they are automatically calculated
     };
 
-    // this.changeInputComponent = this.changeInputComponent.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.getUrl = this.getUrl.bind(this);
     this.handleStartDayChange = this.handleStartDayChange.bind(this);
@@ -44,38 +41,6 @@ class App extends Component {
       [name]: value
     });
   }
-
-  // changeInputComponent(inputName, value) {
-  //   console.log(parseFloat(value));
-  //
-  //   const floatValue = parseFloat(value);
-  //   const result = this.state.totalTime + floatValue;
-  //
-  //   const conversionInMinutes = hour => Math.floor(hour) * 60 + (hour - (Math.floor(hour))) * 100;
-  //   var conversionInHours = min => Math.floor( min/60 ) + min % 60 / 100;
-  //   console.log('In minutes:', conversionInMinutes(result), conversionInHours(conversionInMinutes(result)));
-  //   // console.log(result.toFixed(2))
-  //   // console.log(4444, inputName, value, parseFloat(this.state.totalTime), this.state.totalTime + value);
-  //
-  //   /*
-  //   var Total_hour = '9.30',
-  //   Paid_hour = '8.00',
-  //   Extra_hour = '0.40';
-  //
-  //   var conversionInMinutes = hour => Math.floor(hour) * 60 + (hour - (Math.floor(hour))) * 100;
-  //   var conversionInHours = min => Math.floor( min/60 ) + min % 60 / 100;
-  //   var Remaining_hour = conversionInMinutes(Total_hour) - conversionInMinutes(Paid_hour) - conversionInMinutes(Extra_hour);
-  //
-  //   console.log(conversionInHours(Remaining_hour).toFixed(2));
-  //   */
-  //
-  //   if (!isNaN(parseFloat(value))) {
-  //     this.setState({
-  //       totalTime: result
-  //     });
-  //   }
-  //
-  // }
 
   static parseDate(str, format, locale) {
     const parsed = parse(str, format, { locale });
@@ -103,9 +68,10 @@ class App extends Component {
 
     axios.get(this.getUrl(), {auth: {username, password}})
       .then(res => {
+        // Get the amount of pages of time-entries so we know how many promises we need
         const amountOfPages = Math.ceil(res.data.total_count / 50);
         togglData.push(...res.data.data);
-        console.log(1111, amountOfPages, res);
+
         const promises = [];
         if (amountOfPages > 1) {
           for (let i = 2; i <= amountOfPages; i++) {
@@ -115,10 +81,11 @@ class App extends Component {
         return Promise.all(promises);
       })
       .then(res => {
-        console.log(555555, res, togglData);
         for (let i = 0; i < res.length; i++) {
           togglData.push(...res[i].data.data);
         }
+
+        console.log(333444, res);
 
         const parsedTogglData = {};
         for (let i = 0; i < togglData.length; i++) {
@@ -181,11 +148,6 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
-        {/*<h1>Calculate how much you've worked!</h1>*/}
-        {/*<h2>Total time: {this.state.totalTime}</h2>*/}
-        {/*<div className="App-intro">*/}
-        {/*<WeekComponent name={this.firstInputName} actionOnChange={this.changeInputComponent}></WeekComponent>*/}
-        {/*</div>*/}
         <div>
           <label>Workspace ID</label>
           <input type="text" name="workspaceId" value={this.state['workspaceId']} onChange={this.handleInputChange}/>
@@ -199,6 +161,10 @@ class App extends Component {
           <input type="text" name="username" value={this.state.hoursInAWeek} onChange={this.handleInputChange}/>
         </div>
         <div>
+          <label>Weekend dates</label>
+          <input type="text" name="weekendDates" value={this.state.weekendDates}/>
+        </div>
+        <div>
           <label>Start date</label>
           <DayPickerInput formatDate={App.formatDate} format={this.DATE_FORMAT} parseDate={App.parseDate} placeholder={`${format(this.state.startDate, this.DATE_FORMAT)}`} onDayChange={this.handleStartDayChange}/>
         </div>
@@ -209,9 +175,6 @@ class App extends Component {
         <div>
           <button type="button" onClick={this.fetchTimes}>Fetch!</button>
         </div>
-        {/*{this.mapObject(this.state.parsedTogglData, function (key, value) {
-          return <TimeComponent key={key} date={key} timeEntries={value}/>;
-        })}*/}
         <WorkWeekComponent hoursInAWeek={this.state.hoursInAWeek} togglData={this.state.parsedTogglData}/>
       </div>
     );
