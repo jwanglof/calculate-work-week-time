@@ -166,10 +166,12 @@ class App extends Component {
         </div>
         <div>
           <label>Start date</label>
+          {/* TODO Replace with http://react-day-picker.js.org/examples/selected-week instead! */}
           <DayPickerInput formatDate={App.formatDate} format={this.DATE_FORMAT} parseDate={App.parseDate} placeholder={`${format(this.state.startDate, this.DATE_FORMAT)}`} onDayChange={this.handleStartDayChange}/>
         </div>
         <div>
           <label>End date</label>
+          {/* TODO Replace with http://react-day-picker.js.org/examples/selected-week instead! */}
           <DayPickerInput formatDate={App.formatDate} format={this.DATE_FORMAT} parseDate={App.parseDate} placeholder={`${format(this.state.endDate, this.DATE_FORMAT)}`} onDayChange={this.handleEndDayChange}/>
         </div>
         <div>

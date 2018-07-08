@@ -38,7 +38,7 @@ class WorkWeekComponent extends Component {
         <div>
           Total time this week: {fancyTimeFormat(totalTimeInSeconds)}
           <br/>
-          Diff against work-time: {fancyTimeFormat(Math.abs(amountOfOverTimeInSeconds))}
+          Diff against work-time: {fancyTimeFormat(Math.abs(amountOfOverTimeInSeconds))} ({Math.abs(amountOfOverTimeInSeconds)} seconds)
         </div>
       </div>
     );
