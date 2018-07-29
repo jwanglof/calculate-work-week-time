@@ -1,4 +1,4 @@
-export function fancyTimeFormat(time) {
+export function fancyTimeFormatFromSeconds(time) {
   // Hours, minutes and seconds
   const hrs = ~~(time / 3600);
   const mins = ~~((time % 3600) / 60);

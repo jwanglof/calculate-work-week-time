@@ -4,8 +4,9 @@ import './App.css';
 import axios from 'axios';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import {DateUtils} from 'react-day-picker';
-import {format, isSameDay, lastDayOfWeek, parse, startOfWeek, toDate} from 'date-fns'
+import {format, isSameDay, lastDayOfWeek, parse, startOfWeek, endOfISOWeek, toDate, getISOWeek} from 'date-fns'
 import WorkWeekComponent from './WorkWeekComponent';
+import SavedTimes from './SavedTimes';
 
 class App extends Component {
   DATE_FORMAT = 'yyyy-MM-dd';
@@ -128,11 +129,15 @@ class App extends Component {
   }
 
   handleStartDayChange(day) {
-    this.setState({ startDate: day });
+    this.setState({
+      startDate: day,
+      endDate: endOfISOWeek(day)
+    });
   }
 
   handleEndDayChange(day) {
-    this.setState({ endDate: day });
+    // this.setState({ endDate: day });
+    console.log('Disable this, lulz');
   }
 
   mapObject(object, callback) {
@@ -142,42 +147,74 @@ class App extends Component {
   }
 
   render() {
+    const daypickerClasses = {className: 'form-control'};
     return (
-      <div className="App">
+      <div className="App container">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
-        <div>
-          <label>Workspace ID</label>
-          <input type="text" name="workspaceId" value={this.state['workspaceId']} onChange={this.handleInputChange}/>
+
+        <div className="row">
+          <div className="col-8">
+          <div className="row form-group">
+            <label htmlFor="workspaceId" className="col-sm-3 col-form-label text-right">Workspace ID</label>
+            <div className="col-sm-9">
+              <input type="text" className="form-control" id="workspaceId" name="workspaceId" value={this.state['workspaceId']} onChange={this.handleInputChange}/>
+            </div>
+          </div>
+
+          <div className="row form-group">
+            <label htmlFor="username" className="col-sm-3 col-form-label text-right">Username</label>
+            <div className="col-sm-9">
+              <input type="text" className="form-control" id="usernam" name="username" value={this.state['username']} onChange={this.handleInputChange}/>
+            </div>
+          </div>
+
+          <div className="row form-group">
+            <label htmlFor="hoursInAWeek" className="col-sm-3 col-form-label text-right">Amount of hours in a week?</label>
+            <div className="col-sm-9">
+              <input type="text" className="form-control" id="hoursInAWeek" name="hoursInAWeek" value={this.state.hoursInAWeek} onChange={this.handleInputChange}/>
+            </div>
+          </div>
+
+          <div className="row form-group">
+            <label htmlFor="weekendDates" className="col-sm-3 col-form-label text-right">Weekend dates</label>
+            <div className="col-sm-9">
+              <input type="text" className="form-control" id="weekendDates" name="weekendDates" value={this.state.weekendDates}/>
+            </div>
+          </div>
+
+          <div className="row form-group">
+            <label htmlFor="startDate" className="col-sm-3 col-form-label text-right">Start date</label>
+            <div className="col-sm-9">
+              {/* TODO Replace with http://react-day-picker.js.org/examples/selected-week instead! */}
+              <DayPickerInput inputProps={daypickerClasses} formatDate={App.formatDate} format={this.DATE_FORMAT} parseDate={App.parseDate} placeholder={`${format(this.state.startDate, this.DATE_FORMAT)}`} onDayChange={this.handleStartDayChange}/>
+            </div>
+          </div>
+
+          <div className="row form-group">
+            <label htmlFor="endDate" className="col-sm-3 col-form-label text-right">End date</label>
+            <div className="col-sm-9">
+              {/* TODO Replace with http://react-day-picker.js.org/examples/selected-week instead! */}
+              <DayPickerInput inputProps={daypickerClasses} formatDate={App.formatDate} format={this.DATE_FORMAT} parseDate={App.parseDate} placeholder={`${format(this.state.endDate, this.DATE_FORMAT)}`} onDayChange={this.handleEndDayChange}/>
+            </div>
+          </div>
+
+          <div className="row form-group text-center">
+            <div className="col-6 offset-6">
+            <button type="button" className="btn btn-primary btn-block" onClick={this.fetchTimes}>Fetch!</button>
+            </div>
+          </div>
+
+          <WorkWeekComponent hoursInAWeek={this.state.hoursInAWeek} togglData={this.state.parsedTogglData} currentWeek={getISOWeek(this.state.startDate)}/>
+
+          </div>
+
+          <div className="col-4">
+            <SavedTimes/>
+          </div>
         </div>
-        <div>
-          <label>Username</label>
-          <input type="text" name="username" value={this.state['username']} onChange={this.handleInputChange}/>
-        </div>
-        <div>
-          <label>Amount of hours in a week?</label>
-          <input type="text" name="username" value={this.state.hoursInAWeek} onChange={this.handleInputChange}/>
-        </div>
-        <div>
-          <label>Weekend dates</label>
-          <input type="text" name="weekendDates" value={this.state.weekendDates}/>
-        </div>
-        <div>
-          <label>Start date</label>
-          {/* TODO Replace with http://react-day-picker.js.org/examples/selected-week instead! */}
-          <DayPickerInput formatDate={App.formatDate} format={this.DATE_FORMAT} parseDate={App.parseDate} placeholder={`${format(this.state.startDate, this.DATE_FORMAT)}`} onDayChange={this.handleStartDayChange}/>
-        </div>
-        <div>
-          <label>End date</label>
-          {/* TODO Replace with http://react-day-picker.js.org/examples/selected-week instead! */}
-          <DayPickerInput formatDate={App.formatDate} format={this.DATE_FORMAT} parseDate={App.parseDate} placeholder={`${format(this.state.endDate, this.DATE_FORMAT)}`} onDayChange={this.handleEndDayChange}/>
-        </div>
-        <div>
-          <button type="button" onClick={this.fetchTimes}>Fetch!</button>
-        </div>
-        <WorkWeekComponent hoursInAWeek={this.state.hoursInAWeek} togglData={this.state.parsedTogglData}/>
       </div>
     );
   }

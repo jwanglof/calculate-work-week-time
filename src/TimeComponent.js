@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {differenceInSeconds} from 'date-fns';
-import {fancyTimeFormat} from './utils/timeUtils';
+import {fancyTimeFormatFromSeconds} from './utils/timeUtils';
 
 class TimeComponent extends Component {
   constructor(props) {
@@ -22,8 +22,8 @@ class TimeComponent extends Component {
 
     return (
       <div key={date}>
-        {hours.map((v, k) => (<div key={k}>{fancyTimeFormat(v)}</div>))}
-        Totalt: {fancyTimeFormat(totaltHours)}
+        {hours.map((v, k) => (<div key={k}>{fancyTimeFormatFromSeconds(v)}</div>))}
+        Totalt: {fancyTimeFormatFromSeconds(totaltHours)}
       </div>
     );
   }
