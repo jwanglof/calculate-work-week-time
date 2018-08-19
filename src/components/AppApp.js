@@ -5,6 +5,7 @@ import WorkWeek from "./work-week/WorkWeekRedux";
 import Workspace from "./workspace/Workspace";
 import { Col, Row } from "reactstrap";
 import ApiToken from "./api-token/ApiToken";
+import HoursInAWeek from "./hours-in-a-week/HoursInAWeek";
 
 function AppApp() {
   return (
@@ -17,12 +18,14 @@ function AppApp() {
 
       <Workspace />
       <ApiToken />
+      <HoursInAWeek />
       <WorkWeek />
     </div>
   );
 }
 
 function mapStateToProps(state) {
+  console.log("State:", state);
   return {};
 }
 

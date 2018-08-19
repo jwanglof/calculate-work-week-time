@@ -55,7 +55,6 @@ class ApiToken extends Component {
 
   render() {
     let { workspaceId, apiToken } = this.props;
-    console.log(111, workspaceId, apiToken);
     if (!workspaceId) {
       return null;
     }

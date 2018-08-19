@@ -10,38 +10,52 @@ import {
   Label,
   Row
 } from "reactstrap";
-import { setApiToken } from "../../actions/creators/apiToken";
+import { setHoursInAWeek } from "../../actions/creators/hoursInAWeek";
+import { getSessionItem, setSessionItem } from "../../utils/sessionStorageUtil";
 
 class HoursInAWeek extends Component {
+  SESSION_STORAGE_KEY = "hours-in-a-week";
+  DEFAULT_HOURS_IN_A_WEEK = 37.5;
+
   constructor() {
     super();
     this.state = {
-      apiToken: ""
+      hoursInAWeek: this.DEFAULT_HOURS_IN_A_WEEK
     };
   }
 
-  setApiToken = () => {
-    const { apiToken } = this.state;
-    this.props.setApiToken(apiToken);
+  componentDidMount() {
+    const sessionValue = parseFloat(getSessionItem(this.SESSION_STORAGE_KEY));
+    if (sessionValue) {
+      this.setState({
+        apiToken: sessionValue
+      });
+      this.props.setHoursInAWeek(sessionValue);
+    }
+  }
+
+  setHoursInAWeek = () => {
+    const { hoursInAWeek } = this.state;
+    this.props.setHoursInAWeek(hoursInAWeek);
+    setSessionItem(this.SESSION_STORAGE_KEY, hoursInAWeek);
   };
 
   onChange = event => {
     const { value } = event.target;
     this.setState({
-      apiToken: value
+      hoursInAWeek: parseFloat(value)
     });
   };
 
   changeButtonClick = () => {
-    this.props.setWorkspaceId("");
+    this.props.setHoursInAWeek(null);
     this.setState({
-      workspaceId: ""
+      hoursInAWeek: this.DEFAULT_HOURS_IN_A_WEEK
     });
   };
 
   render() {
     let { workspaceId, apiToken, hoursInAWeek } = this.props;
-    console.log(111, workspaceId, apiToken);
     if (!workspaceId && !apiToken) {
       return null;
     }
@@ -50,17 +64,16 @@ class HoursInAWeek extends Component {
       return (
         <Form>
           <FormGroup row>
-            <Label for="apiToken" xs={5}>
-              API token
-              {/*https://toggl.com/app/profile*/}
+            <Label for="hoursInAWeek" xs={5}>
+              Hours in a week
             </Label>
             <Col xs={7}>
               <Input
-                type="text"
-                name="apiToken"
-                id="apiToken"
-                placeholder="API token"
-                value={this.state.apiToken}
+                type="number"
+                name="hoursInAWeek"
+                id="hoursInAWeek"
+                placeholder="Hours in a week"
+                value={this.state.hoursInAWeek}
                 onChange={this.onChange}
                 autoFocus
               />
@@ -69,7 +82,7 @@ class HoursInAWeek extends Component {
           <Button
             color="primary"
             block
-            onClick={this.setApiToken}
+            onClick={this.setHoursInAWeek}
             type="submit"
           >
             Next step
@@ -80,10 +93,7 @@ class HoursInAWeek extends Component {
       return (
         <Alert>
           <Row>
-            <Col xs={8}>
-              API token: {apiToken.substring(0, 7)}
-              ...
-            </Col>
+            <Col xs={8}>Hours in a week: {hoursInAWeek}</Col>
             <Col xs={4} className="float-right">
               <Button color="danger" size="sm" onClick={this.changeButtonClick}>
                 Change
@@ -98,15 +108,16 @@ class HoursInAWeek extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    setApiToken: apiToken => dispatch(setApiToken(apiToken))
+    setHoursInAWeek: hoursInAWeek => dispatch(setHoursInAWeek(hoursInAWeek))
   };
 }
 
 function mapStateToProps(state) {
-  console.log(state);
+  console.log(state, state.hoursInAWeek);
   return {
     workspaceId: state.workspace.workspaceId || null,
-    apiToken: state.apiToken.apiToken || null
+    apiToken: state.apiToken.apiToken || null,
+    hoursInAWeek: state.hoursInAWeek.hoursInAWeek || null
   };
 }
 
