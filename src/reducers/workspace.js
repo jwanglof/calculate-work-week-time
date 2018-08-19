@@ -7,7 +7,7 @@ function workspace(state = initialState, action) {
 
   switch (action.type) {
     case SET_WORKSPACE_ID:
-      console.log(clone, action);
+      clone.workspaceId = action.data;
       return clone;
     default:
       return clone;

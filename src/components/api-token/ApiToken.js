@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import connect from "react-redux/es/connect/connect";
-import { setWorkspaceId } from "../../actions/creators/workspace";
 import {
   Alert,
   Button,
@@ -11,15 +10,16 @@ import {
   Label,
   Row
 } from "reactstrap";
+import { setApiToken } from "../../actions/creators/apiToken";
 import { getSessionItem, setSessionItem } from "../../utils/sessionStorageUtil";
 
-class Workspace extends Component {
-  SESSION_STORAGE_KEY = "workspace-id";
+class ApiToken extends Component {
+  SESSION_STORAGE_KEY = "api-token";
 
   constructor() {
     super();
     this.state = {
-      workspaceId: ""
+      apiToken: ""
     };
   }
 
@@ -27,48 +27,54 @@ class Workspace extends Component {
     const sessionValue = getSessionItem(this.SESSION_STORAGE_KEY);
     if (sessionValue) {
       this.setState({
-        workspaceId: sessionValue
+        apiToken: sessionValue
       });
-      this.props.setWorkspaceId(sessionValue);
+      this.props.setApiToken(sessionValue);
     }
   }
 
-  setWorkspaceId = () => {
-    const { workspaceId } = this.state;
-    this.props.setWorkspaceId(workspaceId);
-    setSessionItem(this.SESSION_STORAGE_KEY, workspaceId);
+  setApiToken = () => {
+    const { apiToken } = this.state;
+    this.props.setApiToken(apiToken);
+    setSessionItem(this.SESSION_STORAGE_KEY, apiToken);
   };
 
   onChange = event => {
     const { value } = event.target;
     this.setState({
-      workspaceId: value
+      apiToken: value
     });
   };
 
   changeButtonClick = () => {
-    this.props.setWorkspaceId("");
+    this.props.setApiToken("");
     this.setState({
-      workspaceId: ""
+      apiToken: ""
     });
   };
 
   render() {
-    let { workspaceId } = this.props;
+    let { workspaceId, apiToken } = this.props;
+    console.log(111, workspaceId, apiToken);
     if (!workspaceId) {
+      return null;
+    }
+
+    if (!apiToken) {
       return (
         <Form>
           <FormGroup row>
-            <Label for="workspaceId" xs={5}>
-              Workspace ID
+            <Label for="apiToken" xs={5}>
+              API token
+              {/*https://toggl.com/app/profile*/}
             </Label>
             <Col xs={7}>
               <Input
                 type="text"
-                name="workspaceId"
-                id="workspaceId"
-                placeholder="Workspace ID"
-                value={this.state.workspaceId}
+                name="apiToken"
+                id="apiToken"
+                placeholder="API token"
+                value={this.state.apiToken}
                 onChange={this.onChange}
                 autoFocus
               />
@@ -77,7 +83,7 @@ class Workspace extends Component {
           <Button
             color="primary"
             block
-            onClick={this.setWorkspaceId}
+            onClick={this.setApiToken}
             type="submit"
           >
             Next step
@@ -88,7 +94,10 @@ class Workspace extends Component {
       return (
         <Alert>
           <Row>
-            <Col xs={8}>Workspace ID: {workspaceId}</Col>
+            <Col xs={8}>
+              API token: {apiToken.substring(0, 7)}
+              ...
+            </Col>
             <Col xs={4} className="float-right">
               <Button color="danger" size="sm" onClick={this.changeButtonClick}>
                 Change
@@ -103,17 +112,18 @@ class Workspace extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    setWorkspaceId: id => dispatch(setWorkspaceId(id))
+    setApiToken: apiToken => dispatch(setApiToken(apiToken))
   };
 }
 
 function mapStateToProps(state) {
   return {
-    workspaceId: state.workspace.workspaceId || null
+    workspaceId: state.workspace.workspaceId || null,
+    apiToken: state.apiToken.apiToken || null
   };
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Workspace);
+)(ApiToken);

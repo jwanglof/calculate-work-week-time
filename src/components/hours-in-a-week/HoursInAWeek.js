@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import connect from "react-redux/es/connect/connect";
-import { setWorkspaceId } from "../../actions/creators/workspace";
 import {
   Alert,
   Button,
@@ -11,38 +10,25 @@ import {
   Label,
   Row
 } from "reactstrap";
-import { getSessionItem, setSessionItem } from "../../utils/sessionStorageUtil";
+import { setApiToken } from "../../actions/creators/apiToken";
 
-class Workspace extends Component {
-  SESSION_STORAGE_KEY = "workspace-id";
-
+class HoursInAWeek extends Component {
   constructor() {
     super();
     this.state = {
-      workspaceId: ""
+      apiToken: ""
     };
   }
 
-  componentDidMount() {
-    const sessionValue = getSessionItem(this.SESSION_STORAGE_KEY);
-    if (sessionValue) {
-      this.setState({
-        workspaceId: sessionValue
-      });
-      this.props.setWorkspaceId(sessionValue);
-    }
-  }
-
-  setWorkspaceId = () => {
-    const { workspaceId } = this.state;
-    this.props.setWorkspaceId(workspaceId);
-    setSessionItem(this.SESSION_STORAGE_KEY, workspaceId);
+  setApiToken = () => {
+    const { apiToken } = this.state;
+    this.props.setApiToken(apiToken);
   };
 
   onChange = event => {
     const { value } = event.target;
     this.setState({
-      workspaceId: value
+      apiToken: value
     });
   };
 
@@ -54,21 +40,27 @@ class Workspace extends Component {
   };
 
   render() {
-    let { workspaceId } = this.props;
-    if (!workspaceId) {
+    let { workspaceId, apiToken, hoursInAWeek } = this.props;
+    console.log(111, workspaceId, apiToken);
+    if (!workspaceId && !apiToken) {
+      return null;
+    }
+
+    if (!hoursInAWeek) {
       return (
         <Form>
           <FormGroup row>
-            <Label for="workspaceId" xs={5}>
-              Workspace ID
+            <Label for="apiToken" xs={5}>
+              API token
+              {/*https://toggl.com/app/profile*/}
             </Label>
             <Col xs={7}>
               <Input
                 type="text"
-                name="workspaceId"
-                id="workspaceId"
-                placeholder="Workspace ID"
-                value={this.state.workspaceId}
+                name="apiToken"
+                id="apiToken"
+                placeholder="API token"
+                value={this.state.apiToken}
                 onChange={this.onChange}
                 autoFocus
               />
@@ -77,7 +69,7 @@ class Workspace extends Component {
           <Button
             color="primary"
             block
-            onClick={this.setWorkspaceId}
+            onClick={this.setApiToken}
             type="submit"
           >
             Next step
@@ -88,7 +80,10 @@ class Workspace extends Component {
       return (
         <Alert>
           <Row>
-            <Col xs={8}>Workspace ID: {workspaceId}</Col>
+            <Col xs={8}>
+              API token: {apiToken.substring(0, 7)}
+              ...
+            </Col>
             <Col xs={4} className="float-right">
               <Button color="danger" size="sm" onClick={this.changeButtonClick}>
                 Change
@@ -103,17 +98,19 @@ class Workspace extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    setWorkspaceId: id => dispatch(setWorkspaceId(id))
+    setApiToken: apiToken => dispatch(setApiToken(apiToken))
   };
 }
 
 function mapStateToProps(state) {
+  console.log(state);
   return {
-    workspaceId: state.workspace.workspaceId || null
+    workspaceId: state.workspace.workspaceId || null,
+    apiToken: state.apiToken.apiToken || null
   };
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Workspace);
+)(HoursInAWeek);
