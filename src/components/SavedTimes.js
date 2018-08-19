@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {EVENT_NAME, EVENT_TIME_OBJECT_NAME} from './utils/constants';
-import {fancyTimeFormatFromSeconds} from './utils/timeUtils';
+import React, { Component } from "react";
+import { EVENT_NAME, EVENT_TIME_OBJECT_NAME } from "../utils/constants";
+import { fancyTimeFormatFromSeconds } from "../utils/timeUtils";
 
 class SavedTimes extends Component {
   constructor(props) {
@@ -12,12 +12,12 @@ class SavedTimes extends Component {
 
     // When the Save-button is pressed it will trigger this event
     // Add the data to the state
-    window.addEventListener(EVENT_NAME, (e) => {
+    window.addEventListener(EVENT_NAME, e => {
       const newSavedTimes = this.state.savedTimes;
       newSavedTimes.push(e.detail[EVENT_TIME_OBJECT_NAME]);
       this.setState({
         savedTimes: newSavedTimes
-      })
+      });
     });
   }
 
@@ -29,7 +29,7 @@ class SavedTimes extends Component {
 
     let totalTime = 0;
     this.state.savedTimes.map(t => {
-      totalTime += t.seconds
+      totalTime += t.seconds;
     });
 
     return (
@@ -45,11 +45,13 @@ class SavedTimes extends Component {
             </thead>
             <tbody>
               {savedTimes.map(timeObject => {
-                return (<tr>
-                  <td>{timeObject.week}</td>
-                  <td>{timeObject.seconds}</td>
-                  <td>{fancyTimeFormatFromSeconds(timeObject.seconds)}</td>
-                </tr>)
+                return (
+                  <tr>
+                    <td>{timeObject.week}</td>
+                    <td>{timeObject.seconds}</td>
+                    <td>{fancyTimeFormatFromSeconds(timeObject.seconds)}</td>
+                  </tr>
+                );
               })}
               <tr>
                 <td>Totalt:</td>
