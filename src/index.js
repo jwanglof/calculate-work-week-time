@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./components/App";
+import App from "./components/AppApp";
 import registerServiceWorker from "./registerServiceWorker";
 import "react-day-picker/lib/style.css";
 import { EVENT_NAME } from "./utils/constants";
@@ -19,9 +19,11 @@ const store = createStore(
 );
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <div className="container">
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </div>,
   document.getElementById("root")
 );
 registerServiceWorker();
