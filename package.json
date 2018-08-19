@@ -9,13 +9,33 @@
     "react": "^16.4.0",
     "react-day-picker": "^7.1.9",
     "react-dom": "^16.4.0",
+    "react-redux": "^5.0.7",
     "react-scripts": "1.1.4",
-    "react-toastr": "^3.0.0"
+    "react-toastr": "^3.0.0",
+    "redux": "^4.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "husky": "^1.0.0-rc.13",
+    "lint-staged": "^7.2.2",
+    "prettier": "^1.14.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "post-commit": "git update-index --again",
+      "pre-push": "npm run test:no-watch"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,json,css,md}": [
+      "npm run pretty",
+      "git add"
+    ]
   }
 }
