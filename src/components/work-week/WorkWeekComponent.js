@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import TimeComponent from "./TimeComponent";
+import TimeComponent from "../time/TimeComponent";
 import { differenceInSeconds } from "date-fns";
 import {
   fancyTimeFormatFromSeconds,
   getSecondsFromHours
-} from "../utils/timeUtils";
-import { EVENT_NAME, EVENT_TIME_OBJECT_NAME } from "../utils/constants";
+} from "../../utils/timeUtils";
+import { EVENT_NAME, EVENT_TIME_OBJECT_NAME } from "../../utils/constants";
 
 class WorkWeekComponent extends Component {
   constructor(props) {

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { EVENT_NAME, EVENT_TIME_OBJECT_NAME } from "../utils/constants";
-import { fancyTimeFormatFromSeconds } from "../utils/timeUtils";
+import { EVENT_NAME, EVENT_TIME_OBJECT_NAME } from "../../utils/constants";
+import { fancyTimeFormatFromSeconds } from "../../utils/timeUtils";
 
 class SavedTimes extends Component {
   constructor(props) {

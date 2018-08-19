@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { differenceInSeconds } from "date-fns";
-import { fancyTimeFormatFromSeconds } from "../utils/timeUtils";
+import { fancyTimeFormatFromSeconds } from "../../utils/timeUtils";
 
 class TimeComponent extends Component {
   constructor(props) {

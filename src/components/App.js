@@ -13,8 +13,8 @@ import {
   toDate,
   getISOWeek
 } from "date-fns";
-import WorkWeekComponent from "./WorkWeekComponent";
-import SavedTimes from "./SavedTimes";
+import WorkWeekComponent from "./work-week/WorkWeekComponent";
+import SavedTimes from "./saved-times/SavedTimes";
 
 class App extends Component {
   DATE_FORMAT = "yyyy-MM-dd";
