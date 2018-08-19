@@ -1,5 +1,5 @@
-import { SET_WORKSPACE } from "../types/workspace";
+import { SET_WORKSPACE_ID } from "../types/workspace";
 
-export function setWorkspace(data) {
-  return { type: SET_WORKSPACE, data };
+export function setWorkspaceId(data) {
+  return { type: SET_WORKSPACE_ID, data };
 }

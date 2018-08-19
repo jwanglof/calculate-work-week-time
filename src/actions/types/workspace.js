@@ -1,1 +1,1 @@
-export const SET_WORKSPACE = "SET_WORKSPACE";
+export const SET_WORKSPACE_ID = "SET_WORKSPACE_ID";

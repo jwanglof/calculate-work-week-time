@@ -1,4 +1,4 @@
-import { SET_WORKSPACE } from "../actions/types/workspace";
+import { SET_WORKSPACE_ID } from "../actions/types/workspace";
 
 const initialState = {};
 
@@ -6,11 +6,8 @@ function workspace(state = initialState, action) {
   const clone = Object.assign({}, state);
 
   switch (action.type) {
-    case SET_WORKSPACE:
-      const dataWithId = {
-        data: action.data
-      };
-      clone.repetitions.push(dataWithId);
+    case SET_WORKSPACE_ID:
+      console.log(clone, action);
       return clone;
     default:
       return clone;

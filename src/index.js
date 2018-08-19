@@ -8,6 +8,7 @@ import { EVENT_NAME } from "./utils/constants";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
 import reducers from "./reducers";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 window[EVENT_NAME] = new Event(EVENT_NAME);
 

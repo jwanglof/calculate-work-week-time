@@ -1,18 +1,17 @@
-import React, { Component } from "react";
+import React from "react";
 import "./App.css";
-import { DateUtils } from "react-day-picker";
 import { connect } from "react-redux";
+import WorkWeek from "./work-week/WorkWeekRedux";
+import Workspace from "./workspace/Workspace";
 
-class AppApp extends Component {
-  DATE_FORMAT = "yyyy-MM-dd";
-
-  constructor() {
-    super();
-  }
-
-  render() {
-    return <div>Hej!</div>;
-  }
+function AppApp() {
+  return (
+    <div>
+      Hej!
+      <Workspace />
+      <WorkWeek />
+    </div>
+  );
 }
 
 function mapStateToProps(state) {
