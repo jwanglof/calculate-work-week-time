@@ -13,6 +13,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 window[EVENT_NAME] = new Event(EVENT_NAME);
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+// TODO Add thunk/saga so it's possible to make async-calls!
 const middlewares = [];
 const store = createStore(
   reducers,
