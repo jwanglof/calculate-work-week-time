@@ -6,19 +6,22 @@ import Workspace from "./workspace/Workspace";
 import { Col, Row } from "reactstrap";
 import ApiToken from "./api-token/ApiToken";
 import HoursInAWeek from "./hours-in-a-week/HoursInAWeek";
+import StartDate from "./dates/Dates";
 
 function AppApp() {
   return (
     <div>
       <Row>
         <Col xs={12}>
-          <h1 className="display-4">Calculate your work-time</h1>
+          <h1 className="display-4">Summarize time from Toggl</h1>
         </Col>
       </Row>
 
       <Workspace />
       <ApiToken />
       <HoursInAWeek />
+      <StartDate />
+
       <WorkWeek />
     </div>
   );
