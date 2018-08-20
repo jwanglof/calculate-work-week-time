@@ -93,9 +93,14 @@ class HoursInAWeek extends Component {
       return (
         <Alert>
           <Row>
-            <Col xs={8}>Hours in a week: {hoursInAWeek}</Col>
-            <Col xs={4} className="float-right">
-              <Button color="danger" size="sm" onClick={this.changeButtonClick}>
+            <Col xs={12}>Hours in a week: {hoursInAWeek}</Col>
+            <Col xs={12}>
+              <Button
+                color="danger"
+                size="sm"
+                block
+                onClick={this.changeButtonClick}
+              >
                 Change
               </Button>
             </Col>

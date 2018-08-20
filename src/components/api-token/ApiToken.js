@@ -93,12 +93,17 @@ class ApiToken extends Component {
       return (
         <Alert>
           <Row>
-            <Col xs={8}>
-              API token: {apiToken.substring(0, 7)}
+            <Col xs={12}>
+              API token: {apiToken.substring(0, 12)}
               ...
             </Col>
-            <Col xs={4} className="float-right">
-              <Button color="danger" size="sm" onClick={this.changeButtonClick}>
+            <Col xs={12}>
+              <Button
+                color="danger"
+                size="sm"
+                block
+                onClick={this.changeButtonClick}
+              >
                 Change
               </Button>
             </Col>
