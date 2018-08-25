@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import connect from "react-redux/es/connect/connect";
 import { setWorkspaceId } from "../../actions/creators/workspace";
 import {
   Alert,
@@ -12,6 +11,7 @@ import {
   Row
 } from "reactstrap";
 import { getSessionItem, setSessionItem } from "../../utils/sessionStorageUtil";
+import { connect } from "react-redux";
 
 class Workspace extends Component {
   SESSION_STORAGE_KEY = "workspace-id";

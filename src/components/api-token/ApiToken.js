@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import connect from "react-redux/es/connect/connect";
 import {
   Alert,
   Button,
@@ -12,6 +11,7 @@ import {
 } from "reactstrap";
 import { setApiToken } from "../../actions/creators/apiToken";
 import { getSessionItem, setSessionItem } from "../../utils/sessionStorageUtil";
+import { connect } from "react-redux";
 
 class ApiToken extends Component {
   SESSION_STORAGE_KEY = "api-token";

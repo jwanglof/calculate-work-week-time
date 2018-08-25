@@ -7,7 +7,7 @@ import {
 const initialState = {
   isLoading: false,
   payload: null,
-  errorMessage: ""
+  error: ""
 };
 
 function toggl(state = initialState, action) {
@@ -19,8 +19,7 @@ function toggl(state = initialState, action) {
       return clone;
     case FETCH_TIMES_FAILED:
       clone.isLoading = false;
-      clone.errorMessage =
-        "Something went wrong when fetching times from Toggl :(";
+      clone.error = action.error;
       return clone;
     case FETCH_TIMES_SUCESS:
       clone.isLoading = false;

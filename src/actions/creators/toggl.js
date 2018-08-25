@@ -8,8 +8,8 @@ export function fetchTimesStarted() {
   return { type: FETCH_TIMES_STARTED };
 }
 
-export function fetchTimesFailed() {
-  return { type: FETCH_TIMES_FAILED };
+export function fetchTimesFailed(error) {
+  return { type: FETCH_TIMES_FAILED, error };
 }
 
 export function fetTimesSuccess(payload) {
