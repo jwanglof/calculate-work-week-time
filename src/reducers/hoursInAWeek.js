@@ -7,7 +7,7 @@ function hoursInAWeek(state = initialState, action) {
 
   switch (action.type) {
     case SET_HOURS_IN_A_WEEK:
-      clone.hoursInAWeek = action.data;
+      clone.hoursInAWeek = action.payload;
       return clone;
     default:
       return clone;

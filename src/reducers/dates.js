@@ -10,10 +10,10 @@ function dates(state = initialState, action) {
 
   switch (action.type) {
     case SET_START_DATE:
-      clone.startDate = action.data;
+      clone.startDate = action.payload;
       return clone;
     case SET_END_DATE:
-      clone.endDate = action.data;
+      clone.endDate = action.payload;
       return clone;
     default:
       return clone;

@@ -6,7 +6,7 @@ import {
 
 const initialState = {
   isLoading: false,
-  data: null,
+  payload: null,
   errorMessage: ""
 };
 
@@ -24,7 +24,7 @@ function toggl(state = initialState, action) {
       return clone;
     case FETCH_TIMES_SUCESS:
       clone.isLoading = false;
-      clone.data = action.data;
+      clone.payload = action.payload;
       return clone;
     default:
       return clone;

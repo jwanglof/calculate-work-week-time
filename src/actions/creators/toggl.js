@@ -12,6 +12,6 @@ export function fetchTimesFailed() {
   return { type: FETCH_TIMES_FAILED };
 }
 
-export function fetTimesSuccess(data) {
-  return { type: FETCH_TIMES_SUCESS, data };
+export function fetTimesSuccess(payload) {
+  return { type: FETCH_TIMES_SUCESS, payload };
 }

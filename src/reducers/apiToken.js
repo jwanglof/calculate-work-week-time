@@ -7,7 +7,7 @@ function apiToken(state = initialState, action) {
 
   switch (action.type) {
     case SET_API_TOKEN:
-      clone.apiToken = action.data;
+      clone.apiToken = action.payload;
       return clone;
     default:
       return clone;
