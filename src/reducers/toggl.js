@@ -1,7 +1,10 @@
 import {
   FETCH_TIMES_FAILED,
   FETCH_TIMES_STARTED,
-  FETCH_TIMES_SUCESS
+  FETCH_TIMES_SUCESS,
+  FETCH_WORKSPACE_FAILED,
+  FETCH_WORKSPACE_STARTED,
+  FETCH_WORKSPACE_SUCCESS
 } from "../actions/types/toggl";
 
 const initialState = {
@@ -22,6 +25,17 @@ function toggl(state = initialState, action) {
       clone.error = action.error;
       return clone;
     case FETCH_TIMES_SUCESS:
+      clone.isLoading = false;
+      clone.payload = action.payload;
+      return clone;
+    case FETCH_WORKSPACE_STARTED:
+      clone.isLoading = true;
+      return clone;
+    case FETCH_WORKSPACE_FAILED:
+      clone.isLoading = false;
+      clone.error = action.error;
+      return clone;
+    case FETCH_WORKSPACE_SUCCESS:
       clone.isLoading = false;
       clone.payload = action.payload;
       return clone;

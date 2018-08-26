@@ -3,6 +3,9 @@ import { format, isSameDay, toDate } from "date-fns";
 import {
   fetchTimesFailed,
   fetchTimesStarted,
+  fetchWorkspaceFailed,
+  fetchWorkspaceStarted,
+  fetchWorkspaceSuccess,
   fetTimesSuccess
 } from "../actions/creators/toggl";
 import { getSessionItem, setSessionItem } from "../utils/sessionStorageUtil";
@@ -100,6 +103,8 @@ export function fetchTimes() {
 
 export function fetchWorkspaces() {
   return function(dispatch, getState) {
+    dispatch(fetchWorkspaceStarted());
+
     const { apiToken } = getState();
     const auth = { username: apiToken.apiToken, password: "api_token" };
 
@@ -107,9 +112,8 @@ export function fetchWorkspaces() {
       .get("https://www.toggl.com/api/v8/workspaces", { auth })
       .then(res => {
         console.log(111, res);
+        dispatch(fetchWorkspaceSuccess(res));
       })
-      .catch(err => {
-        console.error(err);
-      });
+      .catch(err => dispatch(fetchWorkspaceFailed(err)));
   };
 }

@@ -12,6 +12,7 @@ import {
 import { setApiToken } from "../../actions/creators/apiToken";
 import { getSessionItem, setSessionItem } from "../../utils/sessionStorageUtil";
 import { connect } from "react-redux";
+import { fetchWorkspaces } from "../../services/toggleApi";
 
 class ApiToken extends Component {
   SESSION_STORAGE_KEY = "api-token";
@@ -119,7 +120,8 @@ class ApiToken extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    setApiToken: apiToken => dispatch(setApiToken(apiToken))
+    setApiToken: apiToken => dispatch(setApiToken(apiToken)),
+    fetchWorkspaces: () => dispatch(fetchWorkspaces())
   };
 }
 
