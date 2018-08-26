@@ -30,3 +30,14 @@ ReactDOM.render(
   document.getElementById("root")
 );
 registerServiceWorker();
+
+/*
+
+    const values = {
+      key: sessionKey,
+      totalSecondsThisWeek: 0
+    };
+
+
+            {mapObject(toggleEntries, (date, dateEntries) => <Day date={date} dateEntries={dateEntries} totalSecondsThisWeekCallback={addSecondsToWeek} key={date}/>)}
+*/
