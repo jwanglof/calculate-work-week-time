@@ -20,7 +20,8 @@ class ApiToken extends Component {
   constructor() {
     super();
     this.state = {
-      apiToken: ""
+      apiToken: "",
+      showForm: true
     };
   }
 
@@ -28,17 +29,26 @@ class ApiToken extends Component {
     const sessionValue = getSessionItem(this.SESSION_STORAGE_KEY);
     if (sessionValue) {
       this.setState({
-        apiToken: sessionValue
+        apiToken: sessionValue,
+        showForm: false
       });
       this.props.setApiToken(sessionValue);
     }
   }
 
-  setApiToken = () => {
+  setApiToken = event => {
+    event.preventDefault();
+
     const { apiToken } = this.state;
-    this.props.setApiToken(apiToken);
-    this.props.fetchWorkspaces();
-    setSessionItem(this.SESSION_STORAGE_KEY, apiToken);
+    const propsApiToken = this.props.apiToken;
+    if (apiToken !== propsApiToken) {
+      this.props.setApiToken(apiToken);
+      this.props.fetchWorkspaces();
+      setSessionItem(this.SESSION_STORAGE_KEY, apiToken);
+    }
+    this.setState({
+      showForm: false
+    });
   };
 
   onChange = event => {
@@ -49,30 +59,29 @@ class ApiToken extends Component {
   };
 
   changeButtonClick = () => {
-    this.props.setApiToken("");
     this.setState({
-      apiToken: ""
+      showForm: true
     });
   };
 
   render() {
     let { apiToken } = this.props;
 
-    if (!apiToken) {
+    if (this.state.showForm) {
       return (
         <Form>
           <FormGroup row>
-            <Label for="apiToken" xs={5}>
+            <Label for="workspaceId" className="pt-0 pb-0" md={5} xs={12}>
               API token
-              <small id="apiTokenBlock" className="form-text text-muted">
-                Enter your private API token from Toggl. Get it{" "}
+              <small id="apiTokenBlock" className="form-text text-muted m-0">
+                Enter your private API token from Toggl. Copy it{" "}
                 <a href="https://toggl.com/app/profile" target="_blank">
                   here
                 </a>{" "}
                 (find "API token"), and paste it into the input.
               </small>
             </Label>
-            <Col xs={7}>
+            <Col md={7} xs={12}>
               <Input
                 type="text"
                 name="apiToken"
