@@ -44,7 +44,7 @@ class ApiToken extends Component {
     if (apiToken !== propsApiToken) {
       this.props.setApiToken(apiToken);
       this.props.fetchWorkspaces();
-      // setSessionItem(this.SESSION_STORAGE_KEY, apiToken);
+      setSessionItem(this.SESSION_STORAGE_KEY, apiToken);
     }
     this.setState({
       showForm: false
