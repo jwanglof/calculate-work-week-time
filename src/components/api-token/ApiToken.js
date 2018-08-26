@@ -54,10 +54,7 @@ class ApiToken extends Component {
   };
 
   render() {
-    let { workspaceId, apiToken } = this.props;
-    if (!workspaceId) {
-      return null;
-    }
+    let { apiToken } = this.props;
 
     if (!apiToken) {
       return (
@@ -65,7 +62,13 @@ class ApiToken extends Component {
           <FormGroup row>
             <Label for="apiToken" xs={5}>
               API token
-              {/*https://toggl.com/app/profile*/}
+              <small id="apiTokenBlock" className="form-text text-muted">
+                Enter your private API token from Toggl. Get it{" "}
+                <a href="https://toggl.com/app/profile" target="_blank">
+                  here
+                </a>{" "}
+                (find "API token"), and paste it into the input.
+              </small>
             </Label>
             <Col xs={7}>
               <Input
@@ -84,6 +87,7 @@ class ApiToken extends Component {
             block
             onClick={this.setApiToken}
             type="submit"
+            disabled={!this.state.apiToken.length}
           >
             Next step
           </Button>
@@ -121,7 +125,6 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-    workspaceId: state.workspace.workspaceId || null,
     apiToken: state.apiToken.apiToken || null
   };
 }

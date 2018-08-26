@@ -97,3 +97,19 @@ export function fetchTimes() {
     }
   };
 }
+
+export function fetchWorkspaces() {
+  return function(dispatch, getState) {
+    const { apiToken } = getState();
+    const auth = { username: apiToken.apiToken, password: "api_token" };
+
+    axios
+      .get("https://www.toggl.com/api/v8/workspaces", { auth })
+      .then(res => {
+        console.log(111, res);
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  };
+}

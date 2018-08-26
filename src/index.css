@@ -52,6 +52,10 @@ html {
   /*border: 1px solid #dee2e6;*/
 }
 
+.nav-item:hover {
+  cursor: pointer;
+}
+
 /* Back Pulse */
 @-webkit-keyframes hvr-back-pulse {
   50% {

@@ -56,7 +56,7 @@ class HoursInAWeek extends Component {
 
   render() {
     let { workspaceId, apiToken, hoursInAWeek } = this.props;
-    if (!workspaceId && !apiToken) {
+    if (!workspaceId || !apiToken) {
       return null;
     }
 
@@ -118,7 +118,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  console.log(state, state.hoursInAWeek);
   return {
     workspaceId: state.workspace.workspaceId || null,
     apiToken: state.apiToken.apiToken || null,

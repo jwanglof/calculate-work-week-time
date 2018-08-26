@@ -54,13 +54,22 @@ class Workspace extends Component {
   };
 
   render() {
-    let { workspaceId } = this.props;
+    // let { workspaceId } = this.props;
+    let { workspaceId, apiToken } = this.props;
+    if (!apiToken) {
+      return null;
+    }
+
     if (!workspaceId) {
       return (
         <Form>
           <FormGroup row>
             <Label for="workspaceId" xs={5}>
               Workspace ID
+              <small id="workspaceIdBlock" className="form-text text-muted">
+                Enter the workspace ID you want to fetch times for. Find it
+                here:
+              </small>
             </Label>
             <Col xs={7}>
               <Input
@@ -114,7 +123,8 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-    workspaceId: state.workspace.workspaceId || null
+    workspaceId: state.workspace.workspaceId || null,
+    apiToken: state.apiToken.apiToken || null
   };
 }
 
