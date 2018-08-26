@@ -24,25 +24,28 @@ class Workspace extends Component {
     super();
     this.state = {
       workspaceId: "",
-      workspacesFromToggl: []
+      workspacesFromToggl: [],
+      showForm: true
     };
   }
 
   componentDidMount() {
-    // const sessionValue = getSessionItem(this.SESSION_STORAGE_KEY);
+    const sessionValue = getSessionItem(this.SESSION_STORAGE_KEY);
     const workspacesFromToggl = getSessionItem(SESSION_STORAGE_WORKSPACES);
-    // if (sessionValue) {
-    //   this.setState({
-    //     workspaceId: sessionValue
-    //   });
-    //   this.props.setWorkspaceId(sessionValue);
-    // }
+
+    if (sessionValue) {
+      this.setState({
+        workspaceId: sessionValue,
+        showForm: false
+      });
+      this.props.setWorkspaceId(sessionValue);
+    }
+
     if (workspacesFromToggl.length) {
       this.setState({
         workspacesFromToggl,
-        workspaceId: workspacesFromToggl[0].id
+        showForm: false
       });
-      this.props.setWorkspaceId(workspacesFromToggl[0].id);
       this.props.setWorkspacesFromToggl(workspacesFromToggl);
     }
   }
@@ -51,6 +54,9 @@ class Workspace extends Component {
     const { workspaceId } = this.state;
     this.props.setWorkspaceId(workspaceId);
     setSessionItem(this.SESSION_STORAGE_KEY, workspaceId);
+    this.setState({
+      showForm: false
+    });
   };
 
   onChange = event => {
@@ -61,12 +67,8 @@ class Workspace extends Component {
   };
 
   changeButtonClick = () => {
-    // const { workspacesFromToggl } = this.state;
-    // console.log(workspacesFromToggl);
-    // const firstId = workspacesFromToggl[0].id;
-    this.props.setWorkspaceId("");
     this.setState({
-      workspaceId: ""
+      showForm: true
     });
   };
 
@@ -77,36 +79,30 @@ class Workspace extends Component {
       return null;
     }
 
-    if (!workspaceId) {
+    const { showForm } = this.state;
+
+    if (showForm) {
       return (
         <Form>
           <FormGroup row>
-            <Label for="workspaceId" xs={5}>
+            <Label for="workspaceId" className="pt-0 pb-0" md={5} xs={12}>
               Workspace ID
-              <small id="workspaceIdBlock" className="form-text text-muted">
+              <small id="workspaceIdBlock" className="form-text text-muted m-0">
                 Choose the workspace you want to fetch times from.
               </small>
             </Label>
-            <Col xs={7}>
-              {/*<Input*/}
-              {/*type="text"*/}
-              {/*name="workspaceId"*/}
-              {/*id="workspaceId"*/}
-              {/*placeholder="Workspace ID"*/}
-              {/*value={this.state.workspaceId}*/}
-              {/*onChange={this.onChange}*/}
-              {/*autoFocus*/}
-              {/*/>*/}
+            <Col md={7} xs={12}>
               <Input
                 type="select"
                 name="select"
                 id="exampleSelect"
                 autoFocus
                 onChange={this.onChange}
+                value={this.state.workspaceId}
               >
                 {this.state.workspacesFromToggl.map(w => (
                   <option key={w.id} value={w.id}>
-                    {w.name}
+                    {w.name} (ID: {w.id})
                   </option>
                 ))}
               </Input>
