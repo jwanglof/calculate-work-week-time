@@ -37,6 +37,7 @@ class ApiToken extends Component {
   setApiToken = () => {
     const { apiToken } = this.state;
     this.props.setApiToken(apiToken);
+    this.props.fetchWorkspaces();
     setSessionItem(this.SESSION_STORAGE_KEY, apiToken);
   };
 

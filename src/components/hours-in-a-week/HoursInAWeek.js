@@ -66,6 +66,10 @@ class HoursInAWeek extends Component {
           <FormGroup row>
             <Label for="hoursInAWeek" xs={5}>
               Hours in a week
+              <small id="workspaceIdBlock" className="form-text text-muted">
+                Set how many hours your work week have (i.e. 37.5 if you have
+                37.5 hours work weeks).
+              </small>
             </Label>
             <Col xs={7}>
               <Input

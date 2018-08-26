@@ -9,7 +9,10 @@ import {
   fetTimesSuccess
 } from "../actions/creators/toggl";
 import { getSessionItem, setSessionItem } from "../utils/sessionStorageUtil";
-import { SESSION_STORAGE_WEEK_PREFIX } from "../constants/sessionStorageKeys";
+import {
+  SESSION_STORAGE_WEEK_PREFIX,
+  SESSION_STORAGE_WORKSPACES
+} from "../constants/sessionStorageKeys";
 import { DATE_FORMAT } from "../constants/dates";
 
 function getUrl(workspaceId, since, until, page = 1) {
@@ -111,7 +114,7 @@ export function fetchWorkspaces() {
     axios
       .get("https://www.toggl.com/api/v8/workspaces", { auth })
       .then(res => {
-        console.log(111, res);
+        setSessionItem(SESSION_STORAGE_WORKSPACES, res.data);
         dispatch(fetchWorkspaceSuccess(res));
       })
       .catch(err => dispatch(fetchWorkspaceFailed(err)));
