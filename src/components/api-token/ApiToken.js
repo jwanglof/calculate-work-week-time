@@ -71,7 +71,7 @@ class ApiToken extends Component {
       return (
         <Form>
           <FormGroup row>
-            <Label for="workspaceId" className="pt-0 pb-0" md={5} xs={12}>
+            <Label for="apiToken" className="pt-0 pb-0" md={7} xs={12}>
               API token
               <small id="apiTokenBlock" className="form-text text-muted m-0">
                 Enter your private API token from Toggl. Copy it{" "}
@@ -81,7 +81,7 @@ class ApiToken extends Component {
                 (find "API token"), and paste it into the input.
               </small>
             </Label>
-            <Col md={7} xs={12}>
+            <Col md={5} xs={12}>
               <Input
                 type="text"
                 name="apiToken"

@@ -20,7 +20,8 @@ class HoursInAWeek extends Component {
   constructor() {
     super();
     this.state = {
-      hoursInAWeek: this.DEFAULT_HOURS_IN_A_WEEK
+      hoursInAWeek: this.DEFAULT_HOURS_IN_A_WEEK,
+      showForm: true
     };
   }
 
@@ -28,7 +29,8 @@ class HoursInAWeek extends Component {
     const sessionValue = parseFloat(getSessionItem(this.SESSION_STORAGE_KEY));
     if (sessionValue) {
       this.setState({
-        apiToken: sessionValue
+        apiToken: sessionValue,
+        showForm: false
       });
       this.props.setHoursInAWeek(sessionValue);
     }
@@ -38,6 +40,9 @@ class HoursInAWeek extends Component {
     const { hoursInAWeek } = this.state;
     this.props.setHoursInAWeek(hoursInAWeek);
     setSessionItem(this.SESSION_STORAGE_KEY, hoursInAWeek);
+    this.setState({
+      showForm: false
+    });
   };
 
   onChange = event => {
@@ -48,9 +53,8 @@ class HoursInAWeek extends Component {
   };
 
   changeButtonClick = () => {
-    this.props.setHoursInAWeek(null);
     this.setState({
-      hoursInAWeek: this.DEFAULT_HOURS_IN_A_WEEK
+      showForm: true
     });
   };
 
@@ -60,18 +64,18 @@ class HoursInAWeek extends Component {
       return null;
     }
 
-    if (!hoursInAWeek) {
+    if (this.state.showForm) {
       return (
         <Form>
           <FormGroup row>
-            <Label for="hoursInAWeek" xs={5}>
+            <Label for="hoursInAWeek" className="pt-0 pb-0" md={7} xs={12}>
               Hours in a week
-              <small id="workspaceIdBlock" className="form-text text-muted">
-                Set how many hours your work week have (i.e. 37.5 if you have
-                37.5 hours work weeks).
+              <small id="workspaceIdBlock" className="form-text text-muted m-0">
+                Set how many hours your work week have (i.e. 37.5 if you have 37
+                hours and 30 minutes work weeks).
               </small>
             </Label>
-            <Col xs={7}>
+            <Col md={5} xs={12}>
               <Input
                 type="number"
                 name="hoursInAWeek"

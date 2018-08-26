@@ -85,13 +85,13 @@ class Workspace extends Component {
       return (
         <Form>
           <FormGroup row>
-            <Label for="workspaceId" className="pt-0 pb-0" md={5} xs={12}>
+            <Label for="workspaceId" className="pt-0 pb-0" md={7} xs={12}>
               Workspace ID
               <small id="workspaceIdBlock" className="form-text text-muted m-0">
                 Choose the workspace you want to fetch times from.
               </small>
             </Label>
-            <Col md={7} xs={12}>
+            <Col md={5} xs={12}>
               <Input
                 type="select"
                 name="select"
