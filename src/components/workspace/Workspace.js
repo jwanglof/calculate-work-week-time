@@ -41,7 +41,7 @@ class Workspace extends Component {
       this.props.setWorkspaceId(sessionValue);
     }
 
-    if (workspacesFromToggl.length) {
+    if (workspacesFromToggl && workspacesFromToggl.length) {
       this.setState({
         workspacesFromToggl,
         showForm: false
