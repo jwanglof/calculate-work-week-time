@@ -93,9 +93,8 @@ class ApiToken extends Component {
       return (
         <Alert>
           <Row>
-            <Col xs={12}>
-              API token: {apiToken.substring(0, 12)}
-              ...
+            <Col xs={12} className="text-truncate">
+              API token: {apiToken}
             </Col>
             <Col xs={12}>
               <Button

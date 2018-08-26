@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
 import App from "./components/App";
 import registerServiceWorker from "./registerServiceWorker";
 import "react-day-picker/lib/style.css";
@@ -10,6 +9,7 @@ import { createStore, applyMiddleware, compose } from "redux";
 import rootReducer from "./reducers";
 import "bootstrap/dist/css/bootstrap.min.css";
 import thunk from "redux-thunk";
+import "./index.css";
 
 window[EVENT_NAME] = new Event(EVENT_NAME);
 

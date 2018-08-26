@@ -1,6 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Card, CardBody, CardGroup, Col, Row } from "reactstrap";
+import {
+  Button,
+  Card,
+  CardBody,
+  CardGroup,
+  Col,
+  Row,
+  UncontrolledCollapse
+} from "reactstrap";
 import {
   fancyTimeFormatFromSeconds,
   getSecondsFromHours
@@ -12,6 +20,7 @@ import { differenceInSeconds } from "date-fns";
 import { TimeHeader } from "./TimesHeader";
 import { TimeFooter } from "./TimeFooter";
 import { TimeBody } from "./TimeBody";
+import classnames from "classnames";
 
 function WorkWeek({ hoursInAWeek }) {
   let dataExist = false;
@@ -50,44 +59,76 @@ function WorkWeek({ hoursInAWeek }) {
     return totalSecondsThisWeek;
   };
 
+  const totalDataEntries = Object.keys(savedData).length;
+  let currentIteration = 1;
+
   mapObject(savedData, (sessionKey, toggleEntries) => {
+    const keys = Object.keys(toggleEntries);
+    const firstDateEntry = keys[keys.length - 1];
+    const lastDateEntry = keys[0];
+
     const totalSecondsThisWeek = getTotalSeconds(toggleEntries);
+    const weekNumber = sessionKey.substring(
+      SESSION_STORAGE_WEEK_PREFIX.length,
+      sessionKey.length
+    );
 
     elements.push(
-      <div key={sessionKey} className="week-container mb-5">
+      <Row
+        key={sessionKey}
+        className={classnames("week-container", {
+          "mb-5": currentIteration !== totalDataEntries
+        })}
+      >
+        <Col xs={5} md={3}>
+          <h4 className="text-without-margin-bottom">Week {weekNumber}</h4>
+          <div className="text-smaller">
+            {firstDateEntry} - {lastDateEntry}
+          </div>
+        </Col>
+        <Col xs={7} md={9}>
+          <div className="text-without-margin-bottom">
+            Total {fancyTimeFormatFromSeconds(totalSecondsThisWeek)}
+          </div>
+          <div>
+            Diff{" "}
+            {fancyTimeFormatFromSeconds(
+              totalSecondsThisWeek - hoursInAWeekSeconds
+            )}
+          </div>
+        </Col>
+        <Col xs={12}>
+          <Button block outline color="primary" id={sessionKey}>
+            Toggle details for week {weekNumber}
+          </Button>
+        </Col>
         <Col key={sessionKey} xs={12}>
-          <h4>{sessionKey}</h4>
-          <CardGroup>
-            {mapObject(toggleEntries, (date, dateEntries) => {
-              const body = dateEntries.map((entry, i) => (
-                <TimeBody
-                  key={i}
-                  entry={entry}
-                  lastTimeBody={i + 1 !== dateEntries.length}
-                />
-              ));
+          <UncontrolledCollapse toggler={sessionKey}>
+            <CardGroup>
+              {mapObject(toggleEntries, (date, dateEntries) => {
+                const body = dateEntries.map((entry, i) => (
+                  <TimeBody
+                    key={i}
+                    entry={entry}
+                    lastTimeBody={i + 1 !== dateEntries.length}
+                  />
+                ));
 
-              return (
-                <Card key={date}>
-                  <TimeHeader date={date} />
-                  <CardBody>{body}</CardBody>
-                  <TimeFooter dateEntries={dateEntries} />
-                </Card>
-              );
-            })}
-          </CardGroup>
+                return (
+                  <Card key={date}>
+                    <TimeHeader date={date} />
+                    <CardBody>{body}</CardBody>
+                    <TimeFooter dateEntries={dateEntries} />
+                  </Card>
+                );
+              })}
+            </CardGroup>
+          </UncontrolledCollapse>
         </Col>
-        <Col xs={6}>
-          Total time: {fancyTimeFormatFromSeconds(totalSecondsThisWeek)}
-        </Col>
-        <Col xs={6}>
-          Diff:{" "}
-          {fancyTimeFormatFromSeconds(
-            totalSecondsThisWeek - hoursInAWeekSeconds
-          )}
-        </Col>
-      </div>
+      </Row>
     );
+
+    currentIteration++;
   });
 
   return <div>{elements.map(e => e)}</div>;

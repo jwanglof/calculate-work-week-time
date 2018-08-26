@@ -8,7 +8,6 @@ import {
   Nav,
   NavItem,
   NavLink,
-  Row,
   TabContent,
   TabPane
 } from "reactstrap";
@@ -25,7 +24,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      activeTab: "2"
+      activeTab: "1"
     };
   }
 
@@ -50,77 +49,69 @@ class App extends Component {
 
     return (
       <div>
-        <Row>
-          <Col xs={12}>
-            <h1 className="display-4">Summarize time from Toggl</h1>
-          </Col>
-        </Row>
+        <Nav tabs>
+          <NavItem>
+            <NavLink
+              className={classnames({ active: this.state.activeTab === "1" })}
+              onClick={() => {
+                this.toggle("1");
+              }}
+            >
+              Configuration
+            </NavLink>
+          </NavItem>
 
-        <div>
-          <Nav tabs>
-            <NavItem>
-              <NavLink
-                className={classnames({ active: this.state.activeTab === "1" })}
-                onClick={() => {
-                  this.toggle("1");
-                }}
-              >
-                Configuration
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink
-                className={classnames({
-                  "hvr-back-pulse":
-                    toggl.payload && this.state.activeTab !== "2",
-                  active: this.state.activeTab === "2"
-                })}
-                onClick={() => {
-                  this.toggle("2");
-                }}
-              >
-                Fetched times
-              </NavLink>
-            </NavItem>
-          </Nav>
-          <TabContent
-            activeTab={this.state.activeTab}
-            className="AppApp--tab-content"
-          >
-            <TabPane tabId="1" className="AppApp--tab-panel__padding">
-              <Col xs="12">
-                <Workspace />
-                <ApiToken />
-                <HoursInAWeek />
-                <StartDate />
+          <NavItem>
+            <NavLink
+              className={classnames({
+                "hvr-back-pulse": toggl.payload && this.state.activeTab !== "2",
+                active: this.state.activeTab === "2"
+              })}
+              onClick={() => {
+                this.toggle("2");
+              }}
+            >
+              Details {hoursInAWeek ? `(${hoursInAWeek}h week)` : ""}
+            </NavLink>
+          </NavItem>
+        </Nav>
+        <TabContent
+          activeTab={this.state.activeTab}
+          className="AppApp--tab-content"
+        >
+          <TabPane tabId="1" className="AppApp--tab-panel__padding">
+            <Col xs="12">
+              <Workspace />
+              <ApiToken />
+              <HoursInAWeek />
+              <StartDate />
 
-                {workspaceId &&
-                apiToken &&
-                hoursInAWeek &&
-                startDate &&
-                endDate ? (
-                  <Button
-                    color="success"
-                    block
-                    onClick={fetchTimes}
-                    type="submit"
-                  >
-                    {toggl.isLoading ? (
-                      <FontAwesomeIcon icon={faCog} spin />
-                    ) : (
-                      "Fetch Times!"
-                    )}
-                  </Button>
-                ) : null}
-              </Col>
-            </TabPane>
-            <TabPane tabId="2" className="AppApp--tab-panel__padding">
-              <Col xs="12">
-                {this.state.activeTab === "2" ? <WorkWeek /> : null}
-              </Col>
-            </TabPane>
-          </TabContent>
-        </div>
+              {workspaceId &&
+              apiToken &&
+              hoursInAWeek &&
+              startDate &&
+              endDate ? (
+                <Button
+                  color="success"
+                  block
+                  onClick={fetchTimes}
+                  type="submit"
+                >
+                  {toggl.isLoading ? (
+                    <FontAwesomeIcon icon={faCog} spin />
+                  ) : (
+                    "Fetch Times!"
+                  )}
+                </Button>
+              ) : null}
+            </Col>
+          </TabPane>
+          <TabPane tabId="2" className="AppApp--tab-panel__padding">
+            <Col xs="12">
+              {this.state.activeTab === "2" ? <WorkWeek /> : null}
+            </Col>
+          </TabPane>
+        </TabContent>
       </div>
     );
   }

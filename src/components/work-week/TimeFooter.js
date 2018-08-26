@@ -11,10 +11,10 @@ export function TimeFooter({ dateEntries }) {
   return (
     <CardFooter className="p-1">
       <blockquote className="blockquote text-center mb-0">
+        <kbd>Total time</kbd>
         <p className="mb-0 text-muted">
           {fancyTimeFormatFromSeconds(totalSecondsThisDayy)}
         </p>
-        <kbd>Total time</kbd>
       </blockquote>
     </CardFooter>
   );

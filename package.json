@@ -27,6 +27,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "test:no-watch": "CI=true react-scripts test --env=jsdom",
+    "test:coverage": "CI=true react-scripts test --coverage --env=jsdom",
     "eject": "react-scripts eject",
     "pretty": "prettier --write \"src/**/*.js\""
   },
@@ -54,6 +55,9 @@
   "jest": {
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
+    ],
+    "collectCoverageFrom": [
+      "./src/actions/**/*.js"
     ]
   }
 }
