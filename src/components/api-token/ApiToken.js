@@ -44,7 +44,7 @@ class ApiToken extends Component {
     if (apiToken !== propsApiToken) {
       this.props.setApiToken(apiToken);
       this.props.fetchWorkspaces();
-      setSessionItem(this.SESSION_STORAGE_KEY, apiToken);
+      // setSessionItem(this.SESSION_STORAGE_KEY, apiToken);
     }
     this.setState({
       showForm: false
@@ -76,7 +76,7 @@ class ApiToken extends Component {
               <small id="apiTokenBlock" className="form-text text-muted m-0">
                 Enter your private API token from Toggl. Copy it{" "}
                 <a href="https://toggl.com/app/profile" target="_blank">
-                  here
+                  from here
                 </a>{" "}
                 (find "API token"), and paste it into the input.
               </small>

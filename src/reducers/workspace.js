@@ -15,6 +15,8 @@ function workspace(state = initialState, action) {
     case SET_WORKSPACES_FROM_TOGGL:
       clone.workspacesFromToggl = action.payload;
       return clone;
+    // TODO Redo this. Move all FETCH_WORKSPACE_SUCCESS-actions here instead.
+    // TODO The list doesn't get populated either when the initial API-token is entered and continued from
     default:
       return clone;
   }

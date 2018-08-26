@@ -20,9 +20,6 @@ import { faCog } from "@fortawesome/free-solid-svg-icons";
 import classnames from "classnames";
 import WorkWeek from "./work-week/WorkWeek";
 
-// 1674001
-// 6499f9ac7861b9befa516ac99ee24bca
-
 class App extends Component {
   constructor() {
     super();
