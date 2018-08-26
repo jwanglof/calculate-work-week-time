@@ -21,7 +21,7 @@ import { faCog } from "@fortawesome/free-solid-svg-icons";
 import classnames from "classnames";
 import WorkWeek from "./work-week/WorkWeekRedux";
 
-class AppApp extends Component {
+class App extends Component {
   constructor() {
     super();
     this.state = {
@@ -147,4 +147,4 @@ function mapStateToProps(state) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AppApp);
+)(App);

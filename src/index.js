@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./components/AppApp";
+import App from "./components/App";
 import registerServiceWorker from "./registerServiceWorker";
 import "react-day-picker/lib/style.css";
 import { EVENT_NAME } from "./utils/constants";
@@ -14,7 +14,6 @@ import thunk from "redux-thunk";
 window[EVENT_NAME] = new Event(EVENT_NAME);
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-// TODO Add thunk/saga so it's possible to make async-calls!
 const middlewares = [thunk];
 const store = createStore(
   rootReducer,
@@ -30,14 +29,3 @@ ReactDOM.render(
   document.getElementById("root")
 );
 registerServiceWorker();
-
-/*
-
-    const values = {
-      key: sessionKey,
-      totalSecondsThisWeek: 0
-    };
-
-
-            {mapObject(toggleEntries, (date, dateEntries) => <Day date={date} dateEntries={dateEntries} totalSecondsThisWeekCallback={addSecondsToWeek} key={date}/>)}
-*/
