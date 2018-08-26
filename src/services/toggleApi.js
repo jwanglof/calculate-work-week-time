@@ -7,14 +7,13 @@ import {
 } from "../actions/creators/toggl";
 import { getSessionItem, setSessionItem } from "../utils/sessionStorageUtil";
 import { SESSION_STORAGE_WEEK_PREFIX } from "../constants/sessionStorageKeys";
+import { DATE_FORMAT } from "../constants/dates";
 
 function getUrl(workspaceId, since, until, page = 1) {
   return `https://toggl.com/reports/api/v2/details?workspace_id=${workspaceId}&since=${since}&until=${until}&user_agent=calculate-work-time&page=${page}`;
 }
 
 export function fetchTimes() {
-  const DATE_FORMAT = "yyyy-MM-dd";
-
   return function(dispatch, getState) {
     dispatch(fetchTimesStarted());
 

@@ -16,12 +16,12 @@ import {
 } from "../../actions/creators/dates";
 import { DayPicker } from "react-day-picker";
 import { connect } from "react-redux";
+import { DATE_FORMAT } from "../../constants/dates";
 
 class Dates extends Component {
   SESSION_STORAGE_KEY_START = "start-time-yyyy-MM-dd";
   SESSION_STORAGE_KEY_END = "end-time-yyyy-MM-dd";
   SESSION_STORAGE_WEEK_NUMBER = "week-number";
-  DATE_FORMAT = "yyyy-MM-dd";
   state = {
     hoverRange: undefined,
     selectedDays: [],
@@ -34,7 +34,7 @@ class Dates extends Component {
       const endSessionValue = getSessionItem(this.SESSION_STORAGE_KEY_END);
       const weekNumberValue = getSessionItem(this.SESSION_STORAGE_WEEK_NUMBER);
 
-      const startDate = parse(startSessionValue, this.DATE_FORMAT, new Date());
+      const startDate = parse(startSessionValue, DATE_FORMAT, new Date());
 
       this.props.setStartDate(startSessionValue);
       this.props.setEndDate(endSessionValue);
@@ -49,11 +49,8 @@ class Dates extends Component {
   setDates = event => {
     event.preventDefault();
     const { selectedDays } = this.state;
-    const startDate = format(selectedDays[0], this.DATE_FORMAT);
-    const endDate = format(
-      selectedDays[selectedDays.length - 1],
-      this.DATE_FORMAT
-    );
+    const startDate = format(selectedDays[0], DATE_FORMAT);
+    const endDate = format(selectedDays[selectedDays.length - 1], DATE_FORMAT);
     const weekNumber = getISOWeek(selectedDays[0]);
     console.log(444, selectedDays);
     console.log(5555, weekNumber);
