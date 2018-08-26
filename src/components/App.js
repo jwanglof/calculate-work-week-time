@@ -19,7 +19,7 @@ import { fetchTimes } from "../services/toggleApi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
 import classnames from "classnames";
-import WorkWeek from "./work-week/WorkWeekRedux";
+import WorkWeek from "./work-week/WorkWeek";
 
 class App extends Component {
   constructor() {
