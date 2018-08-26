@@ -14,7 +14,7 @@ import {
   setStartDate,
   setWeekNumber
 } from "../../actions/creators/dates";
-import { DateUtils, DayPicker } from "react-day-picker";
+import { DayPicker } from "react-day-picker";
 import { connect } from "react-redux";
 
 class Dates extends Component {

@@ -25,7 +25,7 @@ class AppApp extends Component {
   constructor() {
     super();
     this.state = {
-      activeTab: "1"
+      activeTab: "2"
     };
   }
 
@@ -116,7 +116,7 @@ class AppApp extends Component {
             </TabPane>
             <TabPane tabId="2" className="AppApp--tab-panel__padding">
               <Col xs="12">
-                <WorkWeek />
+                {this.state.activeTab === "2" ? <WorkWeek /> : null}
               </Col>
             </TabPane>
           </TabContent>

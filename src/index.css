@@ -16,6 +16,24 @@ body {
   padding-bottom: 15px;
 }
 
+.card-date {
+  margin-bottom: -10px;
+  font-size: 90%;
+  font-weight: bold;
+}
+
+.text-without-margin-bottom {
+  margin-bottom: -10px;
+}
+
+.time-box-information {
+  margin-bottom: -10px;
+}
+
+.week-container {
+  border: 1px solid #dee2e6;
+}
+
 /* Back Pulse */
 @-webkit-keyframes hvr-back-pulse {
   50% {
