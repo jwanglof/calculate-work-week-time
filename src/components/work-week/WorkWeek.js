@@ -81,15 +81,13 @@ function WorkWeek({ hoursInAWeek }) {
         })}
       >
         <Col xs={5} md={3}>
-          <h4 className="text-without-margin-bottom">Week {weekNumber}</h4>
+          <h4>Week {weekNumber}</h4>
           <div className="text-smaller">
             {firstDateEntry} - {lastDateEntry}
           </div>
         </Col>
         <Col xs={7} md={9}>
-          <div className="text-without-margin-bottom">
-            Total {fancyTimeFormatFromSeconds(totalSecondsThisWeek)}
-          </div>
+          <div>Total {fancyTimeFormatFromSeconds(totalSecondsThisWeek)}</div>
           <div>
             Diff{" "}
             {fancyTimeFormatFromSeconds(
