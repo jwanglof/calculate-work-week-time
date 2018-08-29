@@ -109,8 +109,12 @@ class Dates extends Component {
   };
 
   render() {
-    let { workspaceId, apiToken, hoursInAWeek, dates } = this.props;
-    if (!workspaceId || !apiToken || !hoursInAWeek) {
+    let { workspace, apiToken, hoursInAWeek, dates } = this.props;
+    if (
+      !Object.keys(workspace.currentWorkspace).length ||
+      !apiToken ||
+      !hoursInAWeek
+    ) {
       return null;
     }
 
@@ -196,7 +200,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-    workspaceId: state.workspace.workspaceId || null,
+    workspace: state.workspace,
     apiToken: state.apiToken.apiToken || null,
     hoursInAWeek: state.hoursInAWeek.hoursInAWeek || null,
     dates: state.dates

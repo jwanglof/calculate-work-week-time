@@ -1,13 +1,12 @@
 import {
   FETCH_WORKSPACE_FAILED,
   FETCH_WORKSPACE_STARTED,
-  FETCH_WORKSPACE_SUCCESS,
-  SET_WORKSPACE_ID,
+  SET_CURRENT_WORKSPACE,
   SET_WORKSPACES_FROM_TOGGL
 } from "../types/workspace";
 
-export function setWorkspaceId(payload) {
-  return { type: SET_WORKSPACE_ID, payload };
+export function setCurrentWorkspace(payload) {
+  return { type: SET_CURRENT_WORKSPACE, payload };
 }
 
 export function setWorkspacesFromToggl(payload) {
@@ -20,8 +19,4 @@ export function fetchWorkspaceStarted() {
 
 export function fetchWorkspaceFailed(error) {
   return { type: FETCH_WORKSPACE_FAILED, error };
-}
-
-export function fetchWorkspaceSuccess(payload) {
-  return { type: FETCH_WORKSPACE_SUCCESS, payload };
 }

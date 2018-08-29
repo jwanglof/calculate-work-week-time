@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {
-  setWorkspaceId,
+  setCurrentWorkspace,
   setWorkspacesFromToggl
 } from "../../actions/creators/workspace";
 import {
@@ -16,14 +16,17 @@ import {
 import { getSessionItem, setSessionItem } from "../../utils/sessionStorageUtil";
 import { connect } from "react-redux";
 import { SESSION_STORAGE_WORKSPACES } from "../../constants/sessionStorageKeys";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCog } from "@fortawesome/free-solid-svg-icons";
+import classnames from "classnames";
 
 class Workspace extends Component {
-  SESSION_STORAGE_KEY = "workspace-id";
+  SESSION_STORAGE_KEY = "current-workspace";
 
   constructor() {
     super();
     this.state = {
-      workspaceId: "",
+      workspaceIndex: 0,
       workspacesFromToggl: [],
       showForm: true
     };
@@ -34,35 +37,49 @@ class Workspace extends Component {
     const workspacesFromToggl = getSessionItem(SESSION_STORAGE_WORKSPACES);
 
     if (sessionValue) {
+      let workspaceIndex = 0;
+      if (workspacesFromToggl.length) {
+        workspaceIndex = workspacesFromToggl.findIndex(
+          e => e.id === sessionValue.id
+        );
+      }
       this.setState({
-        workspaceId: sessionValue,
-        showForm: false
+        showForm: false,
+        workspaceIndex
       });
-      this.props.setWorkspaceId(sessionValue);
+      this.props.setCurrentWorkspace(sessionValue);
     }
 
     if (workspacesFromToggl && workspacesFromToggl.length) {
       this.setState({
-        workspacesFromToggl,
-        showForm: false
+        workspacesFromToggl
       });
       this.props.setWorkspacesFromToggl(workspacesFromToggl);
     }
   }
 
-  setWorkspaceId = () => {
-    const { workspaceId } = this.state;
-    this.props.setWorkspaceId(workspaceId);
-    setSessionItem(this.SESSION_STORAGE_KEY, workspaceId);
+  setWorkspace = () => {
+    const { workspaceIndex } = this.state;
+    const { workspace } = this.props;
+
+    this.props.setCurrentWorkspace(
+      workspace.workspacesFromToggl[workspaceIndex]
+    );
+    setSessionItem(
+      this.SESSION_STORAGE_KEY,
+      workspace.workspacesFromToggl[workspaceIndex]
+    );
     this.setState({
       showForm: false
     });
   };
 
   onChange = event => {
+    // value is which index that is chosen from the workspaces-list
     const { value } = event.target;
+    console.log(value, this.props.workspace.workspacesFromToggl[value]);
     this.setState({
-      workspaceId: value
+      workspaceIndex: value
     });
   };
 
@@ -73,45 +90,60 @@ class Workspace extends Component {
   };
 
   render() {
-    let { workspaceId, apiToken } = this.props;
+    let { apiToken, workspace } = this.props;
+    console.log(11222, workspace);
 
     if (!apiToken) {
       return null;
     }
 
     const { showForm } = this.state;
+    //
+    // if (!this.state.workspaceIndex && workspace.workspacesFromToggl.length) {
+    //   this.setState({
+    //     workspaceIndex: 0
+    //   });
+    // }
 
     if (showForm) {
       return (
         <Form>
           <FormGroup row>
             <Label for="workspaceId" className="pt-0 pb-0" md={7} xs={12}>
-              Workspace ID
+              Workspace
               <small id="workspaceIdBlock" className="form-text text-muted m-0">
                 Choose the workspace you want to fetch times from.
               </small>
             </Label>
-            <Col md={5} xs={12}>
-              <Input
-                type="select"
-                name="select"
-                id="exampleSelect"
-                autoFocus
-                onChange={this.onChange}
-                value={this.state.workspaceId}
-              >
-                {this.state.workspacesFromToggl.map(w => (
-                  <option key={w.id} value={w.id}>
-                    {w.name} (ID: {w.id})
-                  </option>
-                ))}
-              </Input>
+            <Col
+              md={5}
+              xs={12}
+              className={classnames({ "text-center": workspace.isLoading })}
+            >
+              {workspace.isLoading ? (
+                <FontAwesomeIcon icon={faCog} size="2x" spin />
+              ) : (
+                <Input
+                  type="select"
+                  name="select"
+                  id="exampleSelect"
+                  autoFocus
+                  onChange={this.onChange}
+                  value={this.state.workspaceIndex}
+                >
+                  {workspace.workspacesFromToggl.map((w, index) => (
+                    <option key={index} value={index}>
+                      {w.name} (ID: {w.id})
+                    </option>
+                  ))}
+                </Input>
+              )}
             </Col>
           </FormGroup>
           <Button
             color="primary"
             block
-            onClick={this.setWorkspaceId}
+            onClick={this.setWorkspace}
             type="submit"
           >
             Next step
@@ -122,7 +154,10 @@ class Workspace extends Component {
       return (
         <Alert>
           <Row>
-            <Col xs={12}>Workspace ID: {workspaceId}</Col>
+            <Col xs={12}>
+              Workspace: {workspace.currentWorkspace.name} (ID:{" "}
+              {workspace.currentWorkspace.id})
+            </Col>
             <Col xs={12}>
               <Button
                 color="danger"
@@ -142,15 +177,16 @@ class Workspace extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    setWorkspaceId: id => dispatch(setWorkspaceId(id)),
     setWorkspacesFromToggl: workspaces =>
-      dispatch(setWorkspacesFromToggl(workspaces))
+      dispatch(setWorkspacesFromToggl(workspaces)),
+    setCurrentWorkspace: workspaceData =>
+      dispatch(setCurrentWorkspace(workspaceData))
   };
 }
 
 function mapStateToProps(state) {
   return {
-    workspaceId: state.workspace.workspaceId || null,
+    workspace: state.workspace,
     apiToken: state.apiToken.apiToken || null
   };
 }

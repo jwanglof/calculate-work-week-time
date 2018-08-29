@@ -40,7 +40,7 @@ export function fetchTimes() {
 
       // https://github.com/toggl/toggl_api_docs/blob/master/chapters/authentication.md#http-basic-auth-with-api-token
       const auth = { username: apiToken.apiToken, password: "api_token" };
-      const workspaceId = workspace.workspaceId;
+      const workspaceId = workspace.currentWorkspace.id;
       const since = dates.startDate;
       const until = dates.endDate;
 
@@ -55,7 +55,7 @@ export function fetchTimes() {
           if (amountOfPages > 1) {
             for (let i = 2; i <= amountOfPages; i++) {
               promises.push(
-                axios.get(this.getUrl(workspaceId, since, until, i), { auth })
+                axios.get(getUrl(workspaceId, since, until, i), { auth })
               );
             }
           }

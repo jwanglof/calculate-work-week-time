@@ -39,7 +39,7 @@ class App extends Component {
   render() {
     let {
       fetchTimes,
-      workspaceId,
+      workspace,
       apiToken,
       hoursInAWeek,
       startDate,
@@ -86,7 +86,7 @@ class App extends Component {
               <HoursInAWeek />
               <StartDate />
 
-              {workspaceId &&
+              {Object.keys(workspace.currentWorkspace).length &&
               apiToken &&
               hoursInAWeek &&
               startDate &&
@@ -125,7 +125,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-    workspaceId: state.workspace.workspaceId || null,
+    workspace: state.workspace,
     apiToken: state.apiToken.apiToken || null,
     hoursInAWeek: state.hoursInAWeek.hoursInAWeek || null,
     startDate: state.dates.startDate || null,
