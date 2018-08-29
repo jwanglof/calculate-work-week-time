@@ -3,9 +3,6 @@ import { format, isSameDay, toDate } from "date-fns";
 import {
   fetchTimesFailed,
   fetchTimesStarted,
-  fetchWorkspaceFailed,
-  fetchWorkspaceStarted,
-  fetchWorkspaceSuccess,
   fetTimesSuccess
 } from "../actions/creators/toggl";
 import { getSessionItem, setSessionItem } from "../utils/sessionStorageUtil";
@@ -14,6 +11,11 @@ import {
   SESSION_STORAGE_WORKSPACES
 } from "../constants/sessionStorageKeys";
 import { DATE_FORMAT } from "../constants/dates";
+import {
+  fetchWorkspaceFailed,
+  fetchWorkspaceStarted,
+  setWorkspacesFromToggl
+} from "../actions/creators/workspace";
 
 function getUrl(workspaceId, since, until, page = 1) {
   return `https://toggl.com/reports/api/v2/details?workspace_id=${workspaceId}&since=${since}&until=${until}&user_agent=calculate-work-time&page=${page}`;
@@ -115,7 +117,7 @@ export function fetchWorkspaces() {
       .get("https://www.toggl.com/api/v8/workspaces", { auth })
       .then(res => {
         setSessionItem(SESSION_STORAGE_WORKSPACES, res.data);
-        dispatch(fetchWorkspaceSuccess(res));
+        dispatch(setWorkspacesFromToggl(res.data));
       })
       .catch(err => dispatch(fetchWorkspaceFailed(err)));
   };
