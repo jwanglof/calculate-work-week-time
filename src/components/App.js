@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "./App.css";
 import { connect } from "react-redux";
 import Workspace from "./workspace/Workspace";
 import {
@@ -79,7 +78,7 @@ class App extends Component {
           activeTab={this.state.activeTab}
           className="AppApp--tab-content"
         >
-          <TabPane tabId="1" className="AppApp--tab-panel__padding">
+          <TabPane tabId="1" className="tab-panel__padding">
             <Col xs="12">
               <ApiToken />
               <Workspace />
@@ -106,7 +105,7 @@ class App extends Component {
               ) : null}
             </Col>
           </TabPane>
-          <TabPane tabId="2" className="AppApp--tab-panel__padding">
+          <TabPane tabId="2" className="tab-panel__padding">
             <Col xs="12">
               {this.state.activeTab === "2" ? <WorkWeek /> : null}
             </Col>
