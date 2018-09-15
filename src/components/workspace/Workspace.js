@@ -77,7 +77,6 @@ class Workspace extends Component {
   onChange = event => {
     // value is which index that is chosen from the workspaces-list
     const { value } = event.target;
-    console.log(value, this.props.workspace.workspacesFromToggl[value]);
     this.setState({
       workspaceIndex: value
     });
@@ -91,7 +90,6 @@ class Workspace extends Component {
 
   render() {
     let { apiToken, workspace } = this.props;
-    console.log(11222, workspace);
 
     if (!apiToken) {
       return null;

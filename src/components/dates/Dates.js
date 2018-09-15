@@ -52,8 +52,6 @@ class Dates extends Component {
     const startDate = format(selectedDays[0], DATE_FORMAT);
     const endDate = format(selectedDays[selectedDays.length - 1], DATE_FORMAT);
     const weekNumber = getISOWeek(selectedDays[0]);
-    console.log(444, selectedDays);
-    console.log(5555, weekNumber);
 
     setSessionItem(this.SESSION_STORAGE_KEY_START, startDate);
     setSessionItem(this.SESSION_STORAGE_KEY_END, endDate);

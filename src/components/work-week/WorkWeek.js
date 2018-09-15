@@ -30,7 +30,6 @@ function WorkWeek({ hoursInAWeek }) {
     const key = `${SESSION_STORAGE_WEEK_PREFIX}${i}`;
     const storageValues = getSessionItem(key);
     if (storageValues && Object.keys(storageValues).length) {
-      console.log(key, "exist in session-storage!");
       dataExist = true;
       savedData[key] = storageValues;
     }
