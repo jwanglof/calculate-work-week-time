@@ -87,9 +87,7 @@ class App extends Component {
 
               {Object.keys(workspace.currentWorkspace).length &&
               apiToken &&
-              hoursInAWeek &&
-              startDate &&
-              endDate ? (
+              hoursInAWeek ? (
                 <Button
                   color="success"
                   block

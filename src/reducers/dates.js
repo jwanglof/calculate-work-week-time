@@ -1,7 +1,10 @@
 import {
   SET_END_DATE,
+  SET_FROM_DATE,
   SET_START_DATE,
-  SET_WEEK_NUMBER
+  SET_TO_DATE,
+  SET_WEEK_NUMBER,
+  WEEK_SET_SELECTED_DAYS
 } from "../actions/types/dates";
 
 const initialState = {
@@ -22,6 +25,15 @@ function dates(state = initialState, action) {
       return clone;
     case SET_WEEK_NUMBER:
       clone.weekNumber = action.payload;
+      return clone;
+    case SET_FROM_DATE:
+      clone.fromDate = action.payload;
+      return clone;
+    case SET_TO_DATE:
+      clone.toDate = action.payload;
+      return clone;
+    case WEEK_SET_SELECTED_DAYS:
+      clone.weekSetSelectedDays = action.payload;
       return clone;
     default:
       return clone;

@@ -75,7 +75,11 @@ class ApiToken extends Component {
               API token
               <small id="apiTokenBlock" className="form-text text-muted m-0">
                 Enter your private API token from Toggl. Copy it{" "}
-                <a href="https://toggl.com/app/profile" target="_blank">
+                <a
+                  href="https://toggl.com/app/profile"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   from here
                 </a>{" "}
                 (find "API token"), and paste it into the input.
